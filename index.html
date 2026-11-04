@@ -6,10 +6,10 @@
   <title>Lên Chùa Cầu An - Chùa An Lạc</title>
   <meta name="description" content="Trải nghiệm không gian chùa Việt cổ kính lúc hoàng hôn, thắp hương, thỉnh chuông, gõ mõ tụng kinh, viết lời cầu an, xin quẻ đầu năm và quản lý hồ sơ Phật tử.">
   
-  <!-- Phông chữ truyền thống & hiện đại qua Google Fonts -->
+  <!-- Phông chữ tân cổ điển hoàng gia Á Đông qua Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Nunito:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sedan:ital@0;1&display=swap" rel="stylesheet">
 
   <!-- Importmap Three.js ES Modules từ CDN -->
   <script type="importmap">
@@ -23,20 +23,37 @@
 
   <style>
     /* ==========================================================================
-       1. CẤU HÌNH GIAO DIỆN CHUNG & BIẾN MÀU SẮC (THEME)
+       1. CẤU HÌNH MÀU SẮC & BIẾN HỆ THỐNG (ZEN HERITAGE LUXURY THEME)
        ========================================================================== */
     :root {
-      --gold-primary: #f2c054;
+      /* Bảng màu Hoàng Gia Á Đông & Chùa Cổ */
+      --gold-pure: #ffd700;
+      --gold-prime: #e6b758;
       --gold-glow: #ffe394;
-      --red-temple: #a82828;
-      --red-deep: #701414;
-      --wood-brown: #3e2719;
-      --paper-cream: #fbf7ee;
-      --text-dark: #2c1a0e;
-      --text-gold: #f8df9a;
-      --sky-twilight: #2d1a3c;
-      --font-title: 'Playfair Display', 'Cinzel', serif;
-      --font-body: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+      --gold-dark: #b88628;
+      --gold-soft: rgba(230, 183, 88, 0.25);
+      
+      --lacquer-black: #12090c;
+      --lacquer-dark: #1e0e13;
+      --lacquer-wine: #2d1217;
+      
+      --vermilion: #b83232;
+      --vermilion-glow: #e04848;
+      --jade-deep: #16382f;
+      --jade-accent: #38a385;
+      
+      --silk-cream: #faf6ed;
+      --silk-parchment: #f2e9d7;
+      --text-muted: #c8b29b;
+      --text-gold: #fde8b3;
+      
+      --font-display: 'Cinzel Decorative', 'Playfair Display', serif;
+      --font-serif: 'Playfair Display', 'Sedan', serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+      --glass-bg: rgba(26, 12, 16, 0.78);
+      --glass-border: rgba(230, 183, 88, 0.38);
+      --glass-glow: 0 8px 32px rgba(0, 0, 0, 0.55), inset 0 1px 1px rgba(255, 235, 175, 0.25);
     }
 
     * {
@@ -52,9 +69,9 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background-color: #120919;
-      font-family: var(--font-body);
-      color: var(--paper-cream);
+      background-color: var(--lacquer-black);
+      font-family: var(--font-sans);
+      color: var(--silk-cream);
       touch-action: none;
     }
 
@@ -69,7 +86,7 @@
     }
 
     /* ==========================================================================
-       2. GIAO DIỆN ĐIỀU KHIỂN & LỚP PHỦ HUD (HEADS-UP DISPLAY)
+       2. GIAO DIỆN ĐIỀU KHIỂN & LỚP PHỦ HUD NGHỆ THUẬT
        ========================================================================== */
     #ui-layer {
       position: absolute;
@@ -88,80 +105,142 @@
     .top-hud {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
-      padding: max(12px, env(safe-area-inset-top)) 16px 8px 16px;
+      align-items: center;
+      padding: max(14px, env(safe-area-inset-top)) 16px 10px 16px;
       pointer-events: auto;
     }
 
-    .temple-badge {
+    /* Huy hiệu Chùa An Lạc */
+    .temple-crest {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 40px;
+      padding: 6px 16px 6px 8px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: var(--glass-glow);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .temple-crest:hover {
+      border-color: rgba(242, 192, 84, 0.7);
+      transform: translateY(-1px);
+    }
+
+    .crest-emblem {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #f3cb75 0%, #aa6c17 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 14px rgba(243, 203, 117, 0.6), inset 0 1px 2px #fff;
+      font-size: 1.2rem;
+      animation: gentleRotate 20s linear infinite;
+    }
+
+    @keyframes gentleRotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .crest-text {
       display: flex;
       flex-direction: column;
-      gap: 2px;
-      background: rgba(46, 22, 12, 0.78);
-      border: 1px solid rgba(242, 192, 84, 0.5);
-      border-radius: 14px;
-      padding: 8px 14px;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
     }
 
-    .temple-badge .name {
-      font-family: var(--font-title);
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--gold-glow);
-      text-shadow: 0 0 8px rgba(242, 192, 84, 0.6);
-      letter-spacing: 0.5px;
+    .crest-text .name {
+      font-family: var(--font-display);
+      font-size: 0.96rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      background: linear-gradient(180deg, #fff2cc 0%, #e6b758 70%, #aa6c17 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.8));
     }
 
-    .temple-badge .counter {
-      font-size: 0.75rem;
-      color: #e8d7b8;
+    .crest-text .counter {
+      font-size: 0.72rem;
+      color: var(--text-muted);
       display: flex;
       align-items: center;
       gap: 5px;
+      font-weight: 500;
     }
 
     .counter-dot {
-      width: 7px;
-      height: 7px;
+      width: 6px;
+      height: 6px;
       background: #4ade80;
       border-radius: 50%;
       display: inline-block;
-      box-shadow: 0 0 6px #4ade80;
-      animation: pulseDot 2s infinite;
+      box-shadow: 0 0 8px #4ade80;
+      animation: pulseGreen 2s infinite ease-in-out;
     }
 
-    @keyframes pulseDot {
+    @keyframes pulseGreen {
       0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.85); }
+      50% { opacity: 0.4; transform: scale(0.8); }
     }
 
-    .top-buttons {
+    /* Nhóm nút góc trên bên phải */
+    .top-actions {
       display: flex;
-      gap: 8px;
+      gap: 10px;
     }
 
-    .btn-hud-icon {
-      width: 42px;
-      height: 42px;
+    .btn-zen-pill {
+      height: 40px;
+      padding: 0 12px;
+      border-radius: 20px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      color: var(--text-gold);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      box-shadow: var(--glass-glow);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .btn-zen-icon {
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
-      background: rgba(46, 22, 12, 0.85);
-      border: 1.5px solid var(--gold-primary);
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
       color: var(--gold-glow);
       font-size: 1.15rem;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-      backdrop-filter: blur(6px);
-      transition: transform 0.15s, background-color 0.2s;
+      box-shadow: var(--glass-glow);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
     }
 
-    .btn-hud-icon:active {
-      transform: scale(0.9);
-      background: rgba(85, 38, 19, 0.95);
+    .btn-zen-icon:hover, .btn-zen-pill:hover {
+      transform: translateY(-2px);
+      border-color: rgba(242, 192, 84, 0.8);
+      box-shadow: 0 6px 20px rgba(230, 183, 88, 0.35);
+      color: #fff;
+    }
+
+    .btn-zen-icon:active, .btn-zen-pill:active {
+      transform: scale(0.92);
     }
 
     /* Bong bóng tin nhắn suy nghĩ của Khách AI */
@@ -178,42 +257,43 @@
     .ai-speech-bubble {
       position: absolute;
       transform: translate(-50%, -100%);
-      background: rgba(254, 250, 240, 0.95);
-      border: 1.5px solid #d49b42;
-      color: #3b2210;
-      font-size: 0.76rem;
+      background: linear-gradient(180deg, #fffcf5 0%, #f4ebd6 100%);
+      border: 1px solid #d4a754;
+      color: #3b1b11;
+      font-family: var(--font-serif);
+      font-size: 0.82rem;
       font-weight: 700;
-      padding: 5px 11px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+      padding: 6px 14px;
+      border-radius: 14px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45), 0 0 10px rgba(230, 183, 88, 0.25);
       white-space: nowrap;
       pointer-events: none;
-      transition: opacity 0.5s ease-out, transform 0.3s;
-      animation: bubbleFloat 0.4s ease-out;
+      transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+      animation: bubbleFloatUp 0.45s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .ai-speech-bubble::after {
       content: '';
       position: absolute;
-      bottom: -6px;
+      bottom: -7px;
       left: 50%;
       transform: translateX(-50%);
-      border-width: 6px 6px 0;
+      border-width: 7px 7px 0;
       border-style: solid;
-      border-color: rgba(254, 250, 240, 0.95) transparent;
+      border-color: #f4ebd6 transparent;
       display: block;
       width: 0;
     }
 
-    @keyframes bubbleFloat {
-      0% { opacity: 0; transform: translate(-50%, -85%) scale(0.85); }
+    @keyframes bubbleFloatUp {
+      0% { opacity: 0; transform: translate(-50%, -80%) scale(0.85); }
       100% { opacity: 1; transform: translate(-50%, -100%) scale(1); }
     }
 
     /* Nút tương tác chính (Action Prompt) */
     .action-prompt-container {
       position: absolute;
-      bottom: 110px;
+      bottom: 120px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 20;
@@ -221,95 +301,152 @@
       display: none;
       flex-direction: column;
       align-items: center;
-      gap: 6px;
-      animation: bouncePrompt 1.8s infinite;
-    }
-
-    @keyframes bouncePrompt {
-      0%, 100% { transform: translate(-50%, 0); }
-      50% { transform: translate(-50%, -8px); }
+      gap: 8px;
     }
 
     .btn-action-main {
-      background: linear-gradient(135deg, #f7d268, #d88924);
-      color: #3d1b06;
-      border: 2px solid #fff5cc;
-      border-radius: 30px;
-      padding: 13px 26px;
-      font-family: var(--font-title);
-      font-size: 1.05rem;
+      position: relative;
+      background: linear-gradient(135deg, #fce085 0%, #d8962c 50%, #9e5b0e 100%);
+      color: #2b1104;
+      border: 2px solid #fff2ba;
+      border-radius: 40px;
+      padding: 14px 32px;
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
       font-weight: 800;
+      letter-spacing: 0.5px;
       cursor: pointer;
-      box-shadow: 0 6px 20px rgba(242, 192, 84, 0.65), 0 0 15px rgba(255, 235, 170, 0.4);
+      box-shadow: 0 8px 30px rgba(216, 150, 44, 0.7), 0 0 25px rgba(255, 230, 140, 0.6);
       display: flex;
       align-items: center;
-      gap: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      transition: transform 0.15s, box-shadow 0.2s;
+      gap: 12px;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
+    }
+
+    .btn-action-main::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 60%);
+      transform: scale(0);
+      transition: transform 0.4s ease-out;
+    }
+
+    .btn-action-main:hover::before {
+      transform: scale(1);
+    }
+
+    .btn-action-main:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 12px 36px rgba(216, 150, 44, 0.85), 0 0 35px rgba(255, 230, 140, 0.8);
     }
 
     .btn-action-main:active {
-      transform: scale(0.94);
-      box-shadow: 0 3px 10px rgba(242, 192, 84, 0.4);
+      transform: scale(0.95);
+    }
+
+    .action-ripple-ring {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 40px;
+      border: 2px solid #ffd700;
+      opacity: 0;
+      animation: rippleAction 2s infinite cubic-bezier(0.2, 0.6, 0.35, 1);
+    }
+
+    @keyframes rippleAction {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      100% { transform: scale(1.35, 1.6); opacity: 0; }
     }
 
     .action-sub-hint {
       font-size: 0.72rem;
-      background: rgba(0, 0, 0, 0.6);
-      padding: 3px 10px;
-      border-radius: 10px;
+      font-weight: 500;
+      background: rgba(18, 9, 12, 0.8);
+      border: 1px solid rgba(230, 183, 88, 0.3);
+      padding: 4px 14px;
+      border-radius: 12px;
       color: #f7e6c4;
-      backdrop-filter: blur(4px);
+      backdrop-filter: blur(8px);
+      letter-spacing: 0.3px;
     }
 
-    /* Cần điều khiển Joystick ảo trên Mobile */
+    /* Cần điều khiển ảo (Virtual Joystick Compass 8 cánh) */
     #joystick-zone {
       position: absolute;
-      bottom: max(24px, env(safe-area-inset-bottom));
-      left: 20px;
-      width: 120px;
-      height: 120px;
+      bottom: max(26px, env(safe-area-inset-bottom));
+      left: 22px;
+      width: 128px;
+      height: 128px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(242, 192, 84, 0.15) 0%, rgba(20, 10, 5, 0.45) 70%);
-      border: 2px solid rgba(242, 192, 84, 0.4);
+      background: radial-gradient(circle, rgba(230, 183, 88, 0.12) 0%, rgba(18, 9, 12, 0.55) 75%);
+      border: 1.5px solid rgba(230, 183, 88, 0.35);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       pointer-events: auto;
       touch-action: none;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.65), inset 0 0 16px rgba(230, 183, 88, 0.1);
+    }
+
+    /* 4 điểm la bàn mờ */
+    #joystick-zone::before {
+      content: '';
+      position: absolute;
+      width: 80%;
+      height: 80%;
+      border: 1px dashed rgba(230, 183, 88, 0.2);
+      border-radius: 50%;
+      pointer-events: none;
     }
 
     #joystick-thumb {
-      width: 46px;
-      height: 46px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
-      background: radial-gradient(circle, #fce49f 0%, #d8962c 100%);
-      border: 2px solid #fff;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+      background: radial-gradient(circle at 35% 35%, #fff1c2 0%, #e6b758 50%, #9e5b0e 100%);
+      border: 2px solid #ffffff;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.7), 0 0 12px rgba(243, 203, 117, 0.6);
       position: absolute;
       pointer-events: none;
-      transition: transform 0.05s ease-out;
+      transition: transform 0.04s ease-out;
     }
 
-    /* Gợi ý điều khiển máy tính */
+    /* Gợi ý phím PC */
     .pc-controls-hint {
       position: absolute;
-      bottom: 20px;
-      left: 20px;
-      background: rgba(30, 15, 8, 0.7);
-      border: 1px solid rgba(242, 192, 84, 0.3);
-      padding: 8px 12px;
-      border-radius: 10px;
-      font-size: 0.72rem;
-      color: #eed6b0;
+      bottom: 24px;
+      left: 24px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(12px);
+      padding: 10px 16px;
+      border-radius: 14px;
+      font-size: 0.78rem;
+      color: #ebd7bd;
       pointer-events: none;
       display: none;
+      box-shadow: var(--glass-glow);
+    }
+
+    .pc-controls-hint kbd {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(242, 192, 84, 0.5);
+      border-radius: 6px;
+      padding: 2px 6px;
+      font-weight: 700;
+      color: var(--gold-glow);
     }
 
     /* ==========================================================================
-       3. MODAL & CỬA SỔ HỘI THOẠI (WELCOME, MINIGAMES, SỔ CẦU AN, TÀI KHOẢN, CHIA SẺ)
+       3. MODAL & KHUNG HỘI THOẠI (SƠN MÀI HOÀNG GIA - LACQUER ART BOX)
        ========================================================================== */
     .modal-overlay {
       position: absolute;
@@ -317,16 +454,17 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(10, 5, 15, 0.82);
-      backdrop-filter: blur(8px);
+      background: rgba(8, 4, 6, 0.82);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       z-index: 100;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 16px;
+      padding: 18px;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .modal-overlay.active {
@@ -336,74 +474,110 @@
 
     .modal-box {
       width: 100%;
-      max-width: 430px;
+      max-width: 440px;
       max-height: 90vh;
       overflow-y: auto;
-      background: linear-gradient(180deg, #2c160c 0%, #1f0d06 100%);
-      border: 2px solid var(--gold-primary);
-      border-radius: 20px;
-      padding: 24px 20px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(242, 192, 84, 0.3);
+      background: radial-gradient(circle at 50% 0%, #3a161f 0%, #1c0a0f 60%, #110508 100%);
+      border: 1.5px solid var(--gold-prime);
+      border-radius: 26px;
+      padding: 30px 24px 24px 24px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 35px rgba(230, 183, 88, 0.25), inset 0 1px 1px rgba(255, 235, 175, 0.3);
       position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
+      transform: scale(0.92) translateY(15px);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
+    .modal-overlay.active .modal-box {
+      transform: scale(1) translateY(0);
+    }
+
+    /* Họa tiết hoa văn góc truyền thống */
+    .modal-corner-accent {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      border: 2px solid var(--gold-prime);
+      pointer-events: none;
+    }
+    .corner-tl { top: 10px; left: 10px; border-right: none; border-bottom: none; border-top-left-radius: 8px; }
+    .corner-tr { top: 10px; right: 10px; border-left: none; border-bottom: none; border-top-right-radius: 8px; }
+    .corner-bl { bottom: 10px; left: 10px; border-right: none; border-top: none; border-bottom-left-radius: 8px; }
+    .corner-br { bottom: 10px; right: 10px; border-left: none; border-top: none; border-bottom-right-radius: 8px; }
+
     .modal-header-ornament {
-      font-size: 1.8rem;
-      margin-bottom: 4px;
-      color: var(--gold-primary);
+      font-size: 2.2rem;
+      margin-bottom: 6px;
+      filter: drop-shadow(0 0 12px rgba(242, 192, 84, 0.6));
     }
 
     .modal-title {
-      font-family: var(--font-title);
-      font-size: 1.45rem;
-      color: var(--gold-glow);
+      font-family: var(--font-display);
+      font-size: 1.55rem;
+      letter-spacing: 0.5px;
+      background: linear-gradient(180deg, #ffffff 0%, #ffdf94 65%, #c88924 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       margin-bottom: 6px;
-      text-shadow: 0 0 10px rgba(242, 192, 84, 0.5);
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.6));
     }
 
     .modal-subtitle {
-      font-size: 0.85rem;
-      color: #dac2a3;
-      margin-bottom: 18px;
-      line-height: 1.4;
+      font-size: 0.88rem;
+      color: #d1b899;
+      margin-bottom: 20px;
+      line-height: 1.5;
+      font-weight: 400;
     }
 
     .btn-close-modal {
       position: absolute;
-      top: 14px;
-      right: 14px;
-      width: 32px;
-      height: 32px;
+      top: 16px;
+      right: 16px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(242, 192, 84, 0.4);
-      color: #eed6b0;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(230, 183, 88, 0.35);
+      color: var(--gold-glow);
       font-size: 1.1rem;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
+      transition: all 0.2s ease;
     }
 
-    /* Các nút chọn & tương tác bên trong modal */
+    .btn-close-modal:hover {
+      background: rgba(255, 255, 255, 0.18);
+      transform: scale(1.08);
+      border-color: var(--gold-prime);
+    }
+
+    /* Các nút hành động chính trong modal */
     .btn-temple-gold {
       width: 100%;
-      padding: 13px 20px;
-      background: linear-gradient(135deg, #f2c054 0%, #c47c1b 100%);
-      color: #381907;
-      border: none;
-      border-radius: 25px;
-      font-family: var(--font-title);
-      font-size: 1rem;
-      font-weight: 700;
+      padding: 14px 24px;
+      background: linear-gradient(135deg, #fce085 0%, #d8962c 50%, #9e5b0e 100%);
+      color: #2e1104;
+      border: 1px solid #fff5c7;
+      border-radius: 30px;
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(242, 192, 84, 0.4);
-      margin-top: 12px;
-      transition: transform 0.15s;
+      box-shadow: 0 6px 20px rgba(216, 150, 44, 0.45);
+      margin-top: 14px;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .btn-temple-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(216, 150, 44, 0.65);
     }
 
     .btn-temple-gold:active {
@@ -412,56 +586,68 @@
 
     .btn-temple-outline {
       width: 100%;
-      padding: 10px 18px;
-      background: transparent;
-      color: #e2c295;
-      border: 1.5px solid rgba(242, 192, 84, 0.6);
-      border-radius: 25px;
-      font-size: 0.88rem;
+      padding: 11px 20px;
+      background: rgba(255, 255, 255, 0.04);
+      color: #ebd4b0;
+      border: 1.5px solid rgba(230, 183, 88, 0.5);
+      border-radius: 30px;
+      font-size: 0.92rem;
+      font-weight: 600;
       cursor: pointer;
-      margin-top: 8px;
-      transition: background-color 0.2s;
+      margin-top: 10px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-temple-outline:hover {
+      background: rgba(230, 183, 88, 0.12);
+      border-color: var(--gold-prime);
+      color: #fff;
     }
 
     /* Giao diện Thắp Hương */
     .incense-options {
       display: flex;
-      gap: 12px;
+      gap: 14px;
       width: 100%;
-      margin: 15px 0;
+      margin: 16px 0;
     }
 
     .incense-card {
       flex: 1;
-      background: rgba(50, 25, 15, 0.7);
-      border: 1.5px solid rgba(242, 192, 84, 0.4);
-      border-radius: 14px;
-      padding: 14px 8px;
+      background: rgba(45, 18, 24, 0.65);
+      border: 1.5px solid rgba(230, 183, 88, 0.3);
+      border-radius: 18px;
+      padding: 16px 12px;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
+    }
+
+    .incense-card:hover {
+      border-color: rgba(242, 192, 84, 0.7);
+      background: rgba(65, 26, 34, 0.75);
     }
 
     .incense-card.selected {
       border-color: #ffd978;
-      background: rgba(140, 45, 20, 0.6);
-      box-shadow: 0 0 14px rgba(242, 192, 84, 0.5);
-      transform: translateY(-2px);
+      background: linear-gradient(180deg, rgba(140, 42, 28, 0.75) 0%, rgba(85, 24, 16, 0.85) 100%);
+      box-shadow: 0 0 20px rgba(242, 192, 84, 0.45), inset 0 0 12px rgba(255, 215, 0, 0.2);
+      transform: translateY(-3px);
     }
 
-    .incense-card .icon { font-size: 1.6rem; }
-    .incense-card .title { font-weight: 700; color: var(--gold-glow); font-size: 0.9rem; }
-    .incense-card .desc { font-size: 0.72rem; color: #d1b899; }
+    .incense-card .icon { font-size: 1.8rem; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5)); }
+    .incense-card .title { font-family: var(--font-serif); font-weight: 700; color: var(--gold-glow); font-size: 0.96rem; }
+    .incense-card .desc { font-size: 0.74rem; color: #d6be9f; line-height: 1.35; }
 
     /* Giao diện Thỉnh Chuông */
     .bell-ritual-area {
       position: relative;
-      width: 200px;
-      height: 200px;
-      margin: 20px 0;
+      width: 210px;
+      height: 210px;
+      margin: 22px 0;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -469,11 +655,11 @@
 
     .bell-circle-target {
       position: absolute;
-      width: 130px;
-      height: 130px;
-      border: 3px dashed var(--gold-primary);
+      width: 140px;
+      height: 140px;
+      border: 3px dashed var(--gold-prime);
       border-radius: 50%;
-      animation: spinTarget 20s linear infinite;
+      animation: spinTarget 25s linear infinite;
     }
 
     @keyframes spinTarget {
@@ -483,20 +669,25 @@
 
     .bell-circle-pulse {
       position: absolute;
-      width: 190px;
-      height: 190px;
-      border: 3px solid #ff6e40;
+      width: 200px;
+      height: 200px;
+      border: 3px solid #ff7b42;
       border-radius: 50%;
-      opacity: 0.8;
+      opacity: 0.85;
       pointer-events: none;
     }
 
     .bell-icon-center {
-      font-size: 3.5rem;
+      font-size: 4rem;
       color: var(--gold-glow);
-      filter: drop-shadow(0 0 10px rgba(242, 192, 84, 0.8));
+      filter: drop-shadow(0 0 18px rgba(242, 192, 84, 0.85));
       cursor: pointer;
       z-index: 2;
+      transition: transform 0.1s ease;
+    }
+
+    .bell-icon-center:active {
+      transform: scale(0.9);
     }
 
     /* Giao diện Gõ Mõ Tụng Kinh */
@@ -505,47 +696,48 @@
       flex-direction: column;
       align-items: center;
       width: 100%;
-      margin: 15px 0;
+      margin: 16px 0;
     }
 
     .mokugyo-btn {
-      width: 130px;
-      height: 130px;
+      width: 140px;
+      height: 140px;
       border-radius: 50%;
-      background: radial-gradient(circle, #85441e 0%, #4a2108 100%);
-      border: 4px solid var(--gold-primary);
+      background: radial-gradient(circle at 35% 30%, #8c4c23 0%, #4f2308 70%, #291003 100%);
+      border: 4px solid var(--gold-prime);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.6), 0 0 18px rgba(242, 192, 84, 0.35);
-      transition: transform 0.08s;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.7), 0 0 22px rgba(242, 192, 84, 0.4), inset 0 2px 4px rgba(255,255,255,0.3);
+      transition: transform 0.08s, box-shadow 0.15s;
       position: relative;
     }
 
     .mokugyo-btn:active, .mokugyo-btn.struck {
-      transform: scale(0.92);
-      border-color: #ffe6a3;
-      box-shadow: 0 0 25px rgba(242, 192, 84, 0.8);
+      transform: scale(0.91);
+      border-color: #fff2ba;
+      box-shadow: 0 0 35px rgba(242, 192, 84, 0.9);
     }
 
     .mokugyo-hit-feedback {
-      height: 30px;
-      margin-top: 10px;
-      font-weight: 800;
-      font-size: 1.05rem;
+      height: 32px;
+      margin-top: 12px;
+      font-family: var(--font-serif);
+      font-weight: 700;
+      font-size: 1.15rem;
       color: var(--gold-glow);
-      text-shadow: 0 0 8px rgba(242, 192, 84, 0.8);
+      text-shadow: 0 0 10px rgba(242, 192, 84, 0.8);
     }
 
     .mokugyo-progress-bar {
       width: 100%;
       height: 8px;
-      background: rgba(255, 255, 255, 0.15);
-      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 6px;
       overflow: hidden;
-      margin-top: 10px;
+      margin-top: 12px;
     }
 
     .mokugyo-progress-fill {
@@ -558,77 +750,92 @@
     /* Giao diện Viết Lời Cầu An */
     .prayer-input-box {
       width: 100%;
-      background: rgba(20, 10, 5, 0.8);
-      border: 1.5px solid rgba(242, 192, 84, 0.6);
-      border-radius: 12px;
-      padding: 12px;
-      color: #fbf7ee;
-      font-family: var(--font-body);
+      background: rgba(18, 9, 12, 0.85);
+      border: 1.5px solid rgba(230, 183, 88, 0.5);
+      border-radius: 16px;
+      padding: 14px 16px;
+      color: var(--silk-cream);
+      font-family: var(--font-sans);
       font-size: 0.95rem;
       resize: none;
-      min-height: 80px;
+      min-height: 86px;
       outline: none;
       margin-bottom: 6px;
+      line-height: 1.5;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
 
     .prayer-input-box:focus {
-      border-color: var(--gold-primary);
-      box-shadow: 0 0 10px rgba(242, 192, 84, 0.4);
+      border-color: var(--gold-pure);
+      box-shadow: 0 0 15px rgba(242, 192, 84, 0.4);
     }
 
     .char-counter {
       width: 100%;
       text-align: right;
-      font-size: 0.72rem;
-      color: #b59b7b;
-      margin-bottom: 12px;
+      font-size: 0.74rem;
+      color: #af9579;
+      margin-bottom: 14px;
     }
 
     .prayer-destination-selector {
       display: flex;
-      gap: 10px;
+      gap: 12px;
       width: 100%;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
 
     .dest-option {
       flex: 1;
-      padding: 10px 6px;
-      border-radius: 12px;
-      background: rgba(50, 25, 15, 0.7);
-      border: 1.5px solid rgba(242, 192, 84, 0.3);
+      padding: 12px 8px;
+      border-radius: 16px;
+      background: rgba(45, 18, 24, 0.65);
+      border: 1.5px solid rgba(230, 183, 88, 0.3);
       cursor: pointer;
-      font-size: 0.82rem;
+      font-size: 0.86rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 4px;
+      gap: 6px;
       color: #e5ccae;
+      transition: all 0.2s ease;
+    }
+
+    .dest-option:hover {
+      background: rgba(65, 26, 34, 0.75);
     }
 
     .dest-option.active {
-      border-color: #f2c054;
-      background: rgba(140, 45, 20, 0.7);
+      border-color: var(--gold-prime);
+      background: linear-gradient(180deg, rgba(140, 42, 28, 0.75) 0%, rgba(85, 24, 16, 0.85) 100%);
       color: #fff;
       font-weight: 700;
+      box-shadow: 0 0 16px rgba(230, 183, 88, 0.35);
     }
 
     .quick-prayers-list {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 12px;
+      gap: 8px;
+      margin-bottom: 14px;
       width: 100%;
     }
 
     .quick-tag {
-      font-size: 0.72rem;
+      font-size: 0.75rem;
       background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(242, 192, 84, 0.3);
+      border: 1px solid rgba(230, 183, 88, 0.35);
       color: #edd1ae;
-      padding: 4px 8px;
-      border-radius: 15px;
+      padding: 5px 11px;
+      border-radius: 18px;
       cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .quick-tag:hover {
+      background: rgba(230, 183, 88, 0.2);
+      border-color: var(--gold-prime);
+      color: #fff;
     }
 
     /* Giao diện Xin Quẻ Đầu Năm */
@@ -637,13 +844,13 @@
       flex-direction: column;
       align-items: center;
       width: 100%;
-      margin: 10px 0;
+      margin: 12px 0;
     }
 
     .fortune-tube {
-      font-size: 4rem;
-      margin-bottom: 8px;
-      filter: drop-shadow(0 0 12px rgba(242, 192, 84, 0.5));
+      font-size: 4.5rem;
+      margin-bottom: 10px;
+      filter: drop-shadow(0 0 16px rgba(242, 192, 84, 0.6));
       transition: transform 0.1s;
     }
 
@@ -652,54 +859,62 @@
     }
 
     @keyframes tubeShake {
-      0%, 100% { transform: rotate(-8deg); }
-      50% { transform: rotate(8deg); }
+      0%, 100% { transform: rotate(-9deg) translateY(-2px); }
+      50% { transform: rotate(9deg) translateY(2px); }
     }
 
     .fortune-result-card {
       width: 100%;
-      background: #fbf7ee;
+      background: linear-gradient(180deg, #fefbf5 0%, #f4ead6 100%);
       color: #2b170c;
       border: 3px double #a82828;
-      border-radius: 12px;
-      padding: 18px 14px;
-      margin-top: 12px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+      border-radius: 18px;
+      padding: 22px 18px;
+      margin-top: 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.65);
       position: relative;
       display: none;
+      animation: cardUnfold 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes cardUnfold {
+      0% { opacity: 0; transform: scale(0.9) translateY(10px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
     }
 
     .fortune-number {
-      font-family: var(--font-title);
-      font-size: 1.1rem;
+      font-family: var(--font-display);
+      font-size: 1.15rem;
       color: #a82828;
       font-weight: 800;
-      border-bottom: 1px solid #e0c8b0;
-      padding-bottom: 4px;
-      margin-bottom: 8px;
+      border-bottom: 1px solid #dfc7af;
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
     }
 
     .fortune-verse {
-      font-family: var(--font-title);
+      font-family: var(--font-serif);
       font-style: italic;
-      font-size: 0.95rem;
-      line-height: 1.5;
+      font-size: 1.05rem;
+      line-height: 1.55;
       color: #3b2010;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
+      font-weight: 600;
     }
 
     .fortune-meaning {
-      font-size: 0.84rem;
-      line-height: 1.45;
+      font-size: 0.88rem;
+      line-height: 1.5;
       color: #55331c;
       border-top: 1px dashed #dec4a8;
-      padding-top: 8px;
+      padding-top: 10px;
     }
 
     .disclaimer-text {
-      font-size: 0.68rem;
+      font-size: 0.72rem;
       color: #9c836d;
-      margin-top: 10px;
+      margin-top: 12px;
       font-style: italic;
     }
 
@@ -715,86 +930,93 @@
     .journal-stats {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 14px;
+      gap: 10px;
+      margin-bottom: 16px;
     }
 
     .stat-chip {
-      background: rgba(50, 25, 15, 0.75);
-      border: 1px solid rgba(242, 192, 84, 0.35);
-      border-radius: 10px;
-      padding: 8px 10px;
+      background: rgba(45, 18, 24, 0.75);
+      border: 1px solid rgba(230, 183, 88, 0.4);
+      border-radius: 14px;
+      padding: 10px 12px;
       text-align: center;
+      box-shadow: inset 0 1px 2px rgba(255,255,255,0.1);
     }
 
     .stat-chip .val {
-      font-family: var(--font-title);
-      font-size: 1.25rem;
+      font-family: var(--font-display);
+      font-size: 1.35rem;
       color: var(--gold-glow);
-      font-weight: 700;
+      font-weight: 800;
     }
 
     .stat-chip .lbl {
-      font-size: 0.72rem;
+      font-size: 0.74rem;
       color: #d1b899;
+      margin-top: 2px;
     }
 
     .journal-section-title {
-      font-family: var(--font-title);
-      font-size: 0.95rem;
+      font-family: var(--font-display);
+      font-size: 0.98rem;
       color: var(--gold-glow);
-      border-bottom: 1px solid rgba(242, 192, 84, 0.3);
-      padding-bottom: 4px;
-      margin: 12px 0 8px 0;
+      border-bottom: 1px solid rgba(230, 183, 88, 0.35);
+      padding-bottom: 6px;
+      margin: 16px 0 10px 0;
+      letter-spacing: 0.5px;
     }
 
     .journal-item {
-      background: rgba(30, 15, 8, 0.65);
-      border-left: 3px solid var(--gold-primary);
-      padding: 8px 10px;
-      border-radius: 0 8px 8px 0;
-      margin-bottom: 6px;
-      font-size: 0.8rem;
-      line-height: 1.4;
+      background: rgba(25, 10, 14, 0.75);
+      border-left: 3px solid var(--gold-prime);
+      padding: 10px 12px;
+      border-radius: 0 12px 12px 0;
+      margin-bottom: 8px;
+      font-size: 0.85rem;
+      line-height: 1.45;
     }
 
     .journal-item .time {
-      font-size: 0.68rem;
+      font-size: 0.7rem;
       color: #b59b7b;
-      margin-bottom: 2px;
+      margin-bottom: 3px;
     }
 
-    /* ==========================================================================
-       GIAO DIỆN QUẢN LÝ TÀI KHOẢN PHẬT TỬ (USER ACCOUNTS MANAGER)
-       ========================================================================== */
+    /* Giao diện Quản Lý Tài Khoản Phật Tử */
     .accounts-list-container {
       width: 100%;
-      max-height: 40vh;
+      max-height: 42vh;
       overflow-y: auto;
-      margin: 12px 0;
+      margin: 14px 0;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
       padding-right: 4px;
     }
 
     .account-card {
-      background: rgba(50, 25, 15, 0.75);
-      border: 1.5px solid rgba(242, 192, 84, 0.35);
-      border-radius: 12px;
-      padding: 10px 12px;
+      background: rgba(45, 18, 24, 0.75);
+      border: 1.5px solid rgba(230, 183, 88, 0.35);
+      border-radius: 16px;
+      padding: 12px 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       text-align: left;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .account-card:hover {
+      border-color: rgba(242, 192, 84, 0.7);
+      background: rgba(65, 26, 34, 0.85);
+      transform: translateY(-1px);
     }
 
     .account-card.active {
       border-color: #4ade80;
-      background: rgba(25, 60, 30, 0.6);
-      box-shadow: 0 0 12px rgba(74, 222, 128, 0.3);
+      background: linear-gradient(135deg, rgba(20, 55, 35, 0.7) 0%, rgba(12, 35, 22, 0.8) 100%);
+      box-shadow: 0 0 18px rgba(74, 222, 128, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.2);
     }
 
     .account-info {
@@ -802,19 +1024,19 @@
     }
 
     .account-info .name {
-      font-family: var(--font-title);
+      font-family: var(--font-serif);
       font-weight: 700;
       color: var(--gold-glow);
-      font-size: 0.95rem;
+      font-size: 1rem;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
 
     .account-info .meta {
-      font-size: 0.72rem;
+      font-size: 0.74rem;
       color: #d1b899;
-      margin-top: 2px;
+      margin-top: 4px;
     }
 
     .account-actions {
@@ -823,55 +1045,62 @@
     }
 
     .btn-act-small {
-      padding: 4px 8px;
-      font-size: 0.72rem;
-      border-radius: 8px;
-      border: 1px solid rgba(242, 192, 84, 0.4);
-      background: rgba(30, 15, 8, 0.8);
+      padding: 5px 10px;
+      font-size: 0.75rem;
+      border-radius: 10px;
+      border: 1px solid rgba(230, 183, 88, 0.4);
+      background: rgba(25, 10, 14, 0.85);
       color: #edd6b5;
       cursor: pointer;
+      transition: all 0.2s ease;
     }
 
     .btn-act-small:hover {
-      background: rgba(60, 30, 15, 0.9);
+      background: rgba(70, 30, 20, 0.95);
       color: #fff;
+      border-color: var(--gold-prime);
     }
 
     .add-account-box {
       width: 100%;
       display: flex;
-      gap: 8px;
-      margin-top: 10px;
+      gap: 10px;
+      margin-top: 12px;
     }
 
     .add-account-input {
       flex: 1;
-      padding: 9px 12px;
-      border-radius: 20px;
-      background: rgba(20, 10, 5, 0.8);
-      border: 1.5px solid rgba(242, 192, 84, 0.5);
+      padding: 10px 16px;
+      border-radius: 25px;
+      background: rgba(18, 9, 12, 0.85);
+      border: 1.5px solid rgba(230, 183, 88, 0.5);
       color: #fff;
-      font-size: 0.88rem;
+      font-size: 0.9rem;
       outline: none;
+    }
+
+    .add-account-input:focus {
+      border-color: var(--gold-pure);
+      box-shadow: 0 0 12px rgba(242, 192, 84, 0.4);
     }
 
     .backup-row {
       display: flex;
-      gap: 8px;
+      gap: 10px;
       width: 100%;
-      margin-top: 14px;
-      border-top: 1px dashed rgba(242, 192, 84, 0.3);
-      padding-top: 12px;
+      margin-top: 16px;
+      border-top: 1px dashed rgba(230, 183, 88, 0.3);
+      padding-top: 14px;
     }
 
     /* Giao diện Chia Sẻ Thiệp Bình An (Canvas Preview) */
     #share-canvas-preview {
       width: 100%;
-      max-width: 260px;
-      border-radius: 12px;
-      border: 2px solid var(--gold-primary);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.6);
-      margin: 10px 0;
+      max-width: 270px;
+      border-radius: 16px;
+      border: 2px solid var(--gold-prime);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.7), 0 0 20px rgba(230, 183, 88, 0.3);
+      margin: 12px 0;
     }
 
     /* Màn hình Welcome đầu game */
@@ -881,7 +1110,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle at center, #351a2e 0%, #110717 100%);
+      background: radial-gradient(circle at center, #421827 0%, #1c0812 60%, #0a0307 100%);
       z-index: 200;
       display: flex;
       flex-direction: column;
@@ -899,76 +1128,94 @@
     }
 
     .welcome-lotus {
-      font-size: 3.8rem;
-      margin-bottom: 8px;
+      font-size: 4.2rem;
+      margin-bottom: 10px;
       animation: floatLotus 3s ease-in-out infinite;
-      filter: drop-shadow(0 0 15px rgba(242, 192, 84, 0.7));
+      filter: drop-shadow(0 0 20px rgba(242, 192, 84, 0.85));
     }
 
     @keyframes floatLotus {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
+      50% { transform: translateY(-10px); }
     }
 
     .welcome-title {
-      font-family: var(--font-title);
-      font-size: 2.1rem;
-      color: var(--gold-glow);
-      text-shadow: 0 0 15px rgba(242, 192, 84, 0.6);
-      margin-bottom: 4px;
+      font-family: var(--font-display);
+      font-size: 2.3rem;
+      letter-spacing: 1.5px;
+      background: linear-gradient(180deg, #ffffff 0%, #ffdf94 60%, #c88924 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.8));
+      margin-bottom: 6px;
     }
 
     .welcome-subtitle {
-      font-size: 0.95rem;
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      font-style: italic;
       color: #ebd7b9;
-      margin-bottom: 22px;
+      margin-bottom: 26px;
+      letter-spacing: 0.5px;
     }
 
     .name-input-group {
       width: 100%;
       max-width: 320px;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
       text-align: left;
     }
 
     .name-input-group label {
       display: block;
-      font-size: 0.8rem;
+      font-size: 0.84rem;
       color: #ebd7b9;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     .name-input-group input {
       width: 100%;
-      padding: 12px 16px;
-      background: rgba(30, 15, 10, 0.7);
-      border: 1.5px solid var(--gold-primary);
-      border-radius: 25px;
+      padding: 13px 18px;
+      background: rgba(20, 8, 12, 0.85);
+      border: 1.5px solid var(--gold-prime);
+      border-radius: 30px;
       color: #fff;
-      font-family: var(--font-body);
-      font-size: 1rem;
+      font-family: var(--font-sans);
+      font-size: 1.02rem;
       text-align: center;
       outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .name-input-group input:focus {
+      border-color: var(--gold-pure);
+      box-shadow: 0 0 20px rgba(242, 192, 84, 0.6);
     }
 
     .btn-enter-temple {
       width: 100%;
       max-width: 320px;
-      padding: 15px 24px;
-      background: linear-gradient(135deg, #f7d268, #d88924);
-      color: #381907;
+      padding: 16px 28px;
+      background: linear-gradient(135deg, #fce085 0%, #d8962c 50%, #9e5b0e 100%);
+      color: #2b1104;
       border: 2px solid #fff5cc;
-      border-radius: 30px;
-      font-family: var(--font-title);
-      font-size: 1.2rem;
+      border-radius: 35px;
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
       font-weight: 800;
+      letter-spacing: 1px;
       cursor: pointer;
-      box-shadow: 0 6px 25px rgba(242, 192, 84, 0.6);
-      transition: transform 0.15s;
+      box-shadow: 0 8px 30px rgba(216, 150, 44, 0.65), 0 0 20px rgba(255, 230, 140, 0.4);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .btn-enter-temple:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 12px 36px rgba(216, 150, 44, 0.85);
     }
 
     .btn-enter-temple:active {
-      transform: scale(0.95);
+      transform: scale(0.96);
     }
 
     /* Màn hướng dẫn nhanh 3 bước */
@@ -978,7 +1225,9 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(10, 5, 15, 0.88);
+      background: rgba(8, 4, 6, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       z-index: 150;
       display: none;
       flex-direction: column;
@@ -991,69 +1240,90 @@
       display: flex;
       flex-direction: column;
       gap: 16px;
-      max-width: 340px;
-      margin: 20px 0;
+      max-width: 360px;
+      margin: 24px 0;
     }
 
     .step-card {
       display: flex;
       align-items: center;
-      gap: 14px;
-      background: rgba(45, 20, 12, 0.7);
-      border: 1px solid rgba(242, 192, 84, 0.4);
-      padding: 12px 14px;
-      border-radius: 14px;
+      gap: 16px;
+      background: rgba(45, 18, 24, 0.7);
+      border: 1px solid rgba(230, 183, 88, 0.4);
+      padding: 14px 16px;
+      border-radius: 18px;
       text-align: left;
+      box-shadow: var(--glass-glow);
     }
 
     .step-num {
-      width: 36px;
-      height: 36px;
-      background: var(--gold-primary);
-      color: #381907;
+      width: 40px;
+      height: 40px;
+      background: radial-gradient(circle, #fce085 0%, #d8962c 100%);
+      color: #2e1104;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
+      font-family: var(--font-display);
       font-weight: 800;
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
     }
 
     .step-text h4 {
-      font-size: 0.95rem;
+      font-family: var(--font-serif);
+      font-size: 1rem;
       color: var(--gold-glow);
-      margin-bottom: 2px;
+      margin-bottom: 3px;
     }
 
     .step-text p {
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       color: #d1b899;
+      line-height: 1.4;
     }
 
     /* Thông báo Toast ngắn */
     #toast-msg {
       position: absolute;
-      top: 75px;
+      top: 80px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(35, 18, 10, 0.92);
-      border: 1px solid var(--gold-primary);
-      color: #fbf7ee;
-      padding: 9px 18px;
-      border-radius: 20px;
-      font-size: 0.85rem;
+      background: rgba(28, 12, 16, 0.94);
+      border: 1px solid var(--gold-prime);
+      color: var(--silk-cream);
+      padding: 10px 22px;
+      border-radius: 25px;
+      font-size: 0.88rem;
       font-weight: 600;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      box-shadow: 0 6px 25px rgba(0,0,0,0.65), 0 0 15px rgba(230, 183, 88, 0.3);
       z-index: 250;
       pointer-events: none;
       opacity: 0;
-      transition: opacity 0.3s, transform 0.3s;
+      transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     #toast-msg.show {
       opacity: 1;
-      transform: translateX(-50%) translateY(5px);
+      transform: translateX(-50%) translateY(6px);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(230, 183, 88, 0.4);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--gold-prime);
     }
   </style>
 </head>
@@ -1066,15 +1336,21 @@
   <div id="ui-layer">
     <!-- Thanh đỉnh -->
     <div class="top-hud">
-      <div class="temple-badge">
-        <span class="name">Chùa An Lạc</span>
-        <span class="counter"><span class="counter-dot"></span>Hôm nay có <strong id="visitor-count">2,842</strong> khách cầu an</span>
+      <div class="temple-crest">
+        <div class="crest-emblem">🪷</div>
+        <div class="crest-text">
+          <span class="name">CHÙA AN LẠC</span>
+          <span class="counter"><span class="counter-dot"></span>Hôm nay: <strong id="visitor-count" style="color:#ffe394; margin-left:2px;">2,842</strong> khách</span>
+        </div>
       </div>
-      <div class="top-buttons">
-        <button class="btn-hud-icon" id="btn-accounts" title="Quản lý tài khoản Phật tử">👤</button>
-        <button class="btn-hud-icon" id="btn-audio" title="Bật/Tắt âm thanh">🔊</button>
-        <button class="btn-hud-icon" id="btn-journal" title="Sổ cầu an của tôi">📜</button>
-        <button class="btn-hud-icon" id="btn-share-top" title="Chia sẻ thiệp">🌸</button>
+      <div class="top-actions">
+        <button class="btn-zen-pill" id="btn-accounts" title="Quản lý hồ sơ Phật tử">
+          <span>👤</span>
+          <span id="hud-profile-name" style="max-width:85px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Tâm An</span>
+        </button>
+        <button class="btn-zen-icon" id="btn-audio" title="Bật/Tắt âm thanh">🔊</button>
+        <button class="btn-zen-icon" id="btn-journal" title="Sổ cầu an của tôi">📜</button>
+        <button class="btn-zen-icon" id="btn-share-top" title="Chia sẻ thiệp bình an">🌸</button>
       </div>
     </div>
 
@@ -1084,7 +1360,8 @@
     <!-- Nút tương tác chính (Action Prompt) -->
     <div class="action-prompt-container" id="action-prompt">
       <button class="btn-action-main" id="btn-action-trigger">
-        <span id="action-icon">🪔</span>
+        <div class="action-ripple-ring"></div>
+        <span id="action-icon" style="font-size:1.4rem;">🪔</span>
         <span id="action-label">Thắp Hương</span>
       </button>
       <span class="action-sub-hint" id="action-hint">Chạm để thực hiện</span>
@@ -1097,7 +1374,7 @@
 
     <!-- Gợi ý phím PC -->
     <div class="pc-controls-hint" id="pc-hint">
-      🎮 Đi lại: <strong>W A S D</strong> hoặc <strong>Mũi tên</strong> | Xoay góc nhìn: <strong>Rê chuột</strong>
+      🎮 Đi lại: <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> / Phím mũi tên &bull; Xoay góc nhìn: <strong>Rê chuột</strong>
     </div>
   </div>
 
@@ -1105,16 +1382,20 @@
   <div id="toast-msg">Chào mừng bạn đến với Chùa An Lạc!</div>
 
   <!-- ==========================================================================
-       4. CÁC MODAL & MINIGAMES
+       4. CÁC MODAL MINIGAMES VỚI HỌA TIẾT SƠN MÀI HOÀNG GIA
        ========================================================================== -->
 
   <!-- Modal Quản Lý Tài Khoản Phật Tử (User Accounts Manager) -->
   <div class="modal-overlay" id="modal-accounts">
     <div class="modal-box">
+      <div class="modal-corner-accent corner-tl"></div>
+      <div class="modal-corner-accent corner-tr"></div>
+      <div class="modal-corner-accent corner-bl"></div>
+      <div class="modal-corner-accent corner-br"></div>
       <button class="btn-close-modal" data-close="modal-accounts">✕</button>
       <div class="modal-header-ornament">👤</div>
-      <h3 class="modal-title">Quản Lý Tài Khoản</h3>
-      <p class="modal-subtitle">Tạo và chuyển đổi hồ sơ Phật tử cho các thành viên trong gia đình.</p>
+      <h3 class="modal-title">Hồ Sơ Phật Tử</h3>
+      <p class="modal-subtitle">Tạo và chuyển đổi hồ sơ cầu an cho các thành viên trong gia đình.</p>
 
       <div class="accounts-list-container" id="accounts-list">
         <!-- Render động danh sách tài khoản -->
@@ -1122,12 +1403,12 @@
 
       <div class="add-account-box">
         <input type="text" id="new-account-name" class="add-account-input" placeholder="Tên hoặc Pháp danh mới..." maxlength="20">
-        <button class="btn-temple-gold" id="btn-add-account" style="width:auto; padding:8px 16px; margin:0; border-radius:20px; font-size:0.85rem;">+ Thêm</button>
+        <button class="btn-temple-gold" id="btn-add-account" style="width:auto; padding:10px 18px; margin:0; border-radius:25px; font-size:0.88rem;">+ Thêm</button>
       </div>
 
       <div class="backup-row">
-        <button class="btn-temple-outline" id="btn-export-backup" style="margin:0; font-size:0.78rem;">📥 Sao Lưu Dữ Liệu</button>
-        <button class="btn-temple-outline" id="btn-import-backup" style="margin:0; font-size:0.78rem;">📤 Khôi Phục File</button>
+        <button class="btn-temple-outline" id="btn-export-backup" style="margin:0; font-size:0.8rem;">📥 Sao Lưu Dữ Liệu</button>
+        <button class="btn-temple-outline" id="btn-import-backup" style="margin:0; font-size:0.8rem;">📤 Khôi Phục File</button>
         <input type="file" id="backup-file-input" accept=".json" style="display:none;">
       </div>
     </div>
@@ -1136,6 +1417,10 @@
   <!-- Modal 1: Thắp Hương -->
   <div class="modal-overlay" id="modal-incense">
     <div class="modal-box">
+      <div class="modal-corner-accent corner-tl"></div>
+      <div class="modal-corner-accent corner-tr"></div>
+      <div class="modal-corner-accent corner-bl"></div>
+      <div class="modal-corner-accent corner-br"></div>
       <button class="btn-close-modal" data-close="modal-incense">✕</button>
       <div class="modal-header-ornament">🪔</div>
       <h3 class="modal-title">Thắp Hương Cầu An</h3>
@@ -1161,10 +1446,14 @@
   <!-- Modal 2: Thỉnh Chuông -->
   <div class="modal-overlay" id="modal-bell">
     <div class="modal-box">
+      <div class="modal-corner-accent corner-tl"></div>
+      <div class="modal-corner-accent corner-tr"></div>
+      <div class="modal-corner-accent corner-bl"></div>
+      <div class="modal-corner-accent corner-br"></div>
       <button class="btn-close-modal" data-close="modal-bell">✕</button>
       <div class="modal-header-ornament">🔔</div>
       <h3 class="modal-title">Thỉnh Đại Hồng Chung</h3>
-      <p class="modal-subtitle">Chạm chuông khi vòng tròn co vừa khớp để tiếng chuông ngân vang thanh tịnh.</p>
+      <p class="modal-subtitle">Chạm chuông khi vòng hào quang co vừa khớp để tiếng chuông ngân vang thanh tịnh.</p>
 
       <div class="bell-ritual-area" id="bell-interactive-area">
         <div class="bell-circle-target"></div>
@@ -1180,6 +1469,10 @@
   <!-- Modal 3: Gõ Mõ Tụng Kinh -->
   <div class="modal-overlay" id="modal-mokugyo">
     <div class="modal-box">
+      <div class="modal-corner-accent corner-tl"></div>
+      <div class="modal-corner-accent corner-tr"></div>
+      <div class="modal-corner-accent corner-bl"></div>
+      <div class="modal-corner-accent corner-br"></div>
       <button class="btn-close-modal" data-close="modal-mokugyo">✕</button>
       <div class="modal-header-ornament">🪘</div>
       <h3 class="modal-title">Gõ Mõ Tụng Kinh</h3>
@@ -1187,8 +1480,8 @@
 
       <div class="mokugyo-area">
         <div class="mokugyo-btn" id="mokugyo-tap-btn">
-          <span style="font-size:2.8rem;">🪵</span>
-          <span style="font-size:0.75rem; color:#fde9b8; font-weight:700; margin-top:4px;">GÕ MÕ</span>
+          <span style="font-size:3.2rem;">🪵</span>
+          <span style="font-size:0.75rem; color:#fde9b8; font-weight:800; letter-spacing:1px; margin-top:2px;">GÕ MÕ</span>
         </div>
         <div class="mokugyo-hit-feedback" id="mokugyo-feedback">Chạm để bắt đầu nhịp</div>
         <div class="mokugyo-progress-bar">
@@ -1196,12 +1489,12 @@
         </div>
       </div>
 
-      <div id="mokugyo-result-card" style="display:none; width:100%; margin-top:10px;">
-        <div style="font-size:1.1rem; color:var(--gold-glow); font-family:var(--font-title); font-weight:700;">
+      <div id="mokugyo-result-card" style="display:none; width:100%; margin-top:12px;">
+        <div style="font-size:1.2rem; color:var(--gold-glow); font-family:var(--font-display); font-weight:700;">
           Điểm Tâm An: <span id="calm-score-val">95</span>/100
         </div>
-        <p id="calm-score-msg" style="font-size:0.85rem; color:#ebd5ba; margin-top:6px; line-height:1.4;"></p>
-        <button class="btn-temple-gold" id="btn-finish-mokugyo" style="margin-top:12px;">Hoàn Tất</button>
+        <p id="calm-score-msg" style="font-size:0.88rem; color:#ebd5ba; margin-top:6px; line-height:1.5; font-family:var(--font-serif); font-style:italic;"></p>
+        <button class="btn-temple-gold" id="btn-finish-mokugyo" style="margin-top:14px;">Hoàn Tất Thời Kinh</button>
       </div>
     </div>
   </div>
@@ -1209,6 +1502,10 @@
   <!-- Modal 4: Viết Lời Cầu An -->
   <div class="modal-overlay" id="modal-prayer">
     <div class="modal-box">
+      <div class="modal-corner-accent corner-tl"></div>
+      <div class="modal-corner-accent corner-tr"></div>
+      <div class="modal-corner-accent corner-bl"></div>
+      <div class="modal-corner-accent corner-br"></div>
       <button class="btn-close-modal" data-close="modal-prayer">✕</button>
       <div class="modal-header-ornament">🎋</div>
       <h3 class="modal-title">Viết Lời Cầu An</h3>
@@ -1226,11 +1523,11 @@
 
       <div class="prayer-destination-selector">
         <div class="dest-option active" data-dest="tree">
-          <span style="font-size:1.4rem;">🎋</span>
+          <span style="font-size:1.6rem;">🎋</span>
           <span>Treo dải lụa Bồ Đề</span>
         </div>
         <div class="dest-option" data-dest="lake">
-          <span style="font-size:1.4rem;">🪷</span>
+          <span style="font-size:1.6rem;">🪷</span>
           <span>Thả hoa đăng Hồ Sen</span>
         </div>
       </div>
@@ -1242,6 +1539,10 @@
   <!-- Modal 5: Xin Quẻ Đầu Năm -->
   <div class="modal-overlay" id="modal-fortune">
     <div class="modal-box">
+      <div class="modal-corner-accent corner-tl"></div>
+      <div class="modal-corner-accent corner-tr"></div>
+      <div class="modal-corner-accent corner-bl"></div>
+      <div class="modal-corner-accent corner-br"></div>
       <button class="btn-close-modal" data-close="modal-fortune">✕</button>
       <div class="modal-header-ornament">🎍</div>
       <h3 class="modal-title">Xin Quẻ Đầu Năm</h3>
@@ -1257,7 +1558,7 @@
         <div class="fortune-verse" id="fortune-card-verse">"Tâm thiện phúc tự đến, lòng trong như nước suối đầu nguồn."</div>
         <div class="fortune-meaning" id="fortune-card-meaning">Năm nay gia đạo ấm êm, thân tâm thư thái, làm việc gì cũng có quý nhân đồng hành hỗ trợ.</div>
         <div class="disclaimer-text">* Mang tính giải trí và an lạc tâm hồn.</div>
-        <button class="btn-temple-gold" id="btn-save-fortune-close" style="margin-top:14px;">Nhận Quẻ & Lưu Sổ</button>
+        <button class="btn-temple-gold" id="btn-save-fortune-close" style="margin-top:16px;">Nhận Quẻ & Lưu Sổ</button>
       </div>
     </div>
   </div>
@@ -1265,6 +1566,10 @@
   <!-- Modal 6: Sổ Cầu An Của Tôi -->
   <div class="modal-overlay" id="modal-journal">
     <div class="modal-box">
+      <div class="modal-corner-accent corner-tl"></div>
+      <div class="modal-corner-accent corner-tr"></div>
+      <div class="modal-corner-accent corner-bl"></div>
+      <div class="modal-corner-accent corner-br"></div>
       <button class="btn-close-modal" data-close="modal-journal">✕</button>
       <div class="modal-header-ornament">📜</div>
       <h3 class="modal-title">Sổ Cầu An</h3>
@@ -1273,7 +1578,7 @@
       <div class="journal-stats">
         <div class="stat-chip">
           <div class="val" id="stat-incense">0</div>
-          <div class="lbl">Lần thắp hương</div>
+          <div class="lbl">Lần dâng hương</div>
         </div>
         <div class="stat-chip">
           <div class="val" id="stat-calm">--</div>
@@ -1284,22 +1589,26 @@
       <div class="journal-content">
         <div class="journal-section-title">🎋 Lời Nguyện Đã Gửi</div>
         <div id="journal-prayers-list">
-          <div style="font-size:0.75rem; color:#a89178; font-style:italic;">Chưa có lời cầu nguyện nào.</div>
+          <div style="font-size:0.78rem; color:#a89178; font-style:italic;">Chưa có lời cầu nguyện nào. Hãy đến Cây Bồ Đề hoặc Hồ Sen để gửi lời nguyện!</div>
         </div>
 
         <div class="journal-section-title">🎍 Quẻ Xăm Đã Xin</div>
         <div id="journal-fortunes-list">
-          <div style="font-size:0.75rem; color:#a89178; font-style:italic;">Chưa xin quẻ xăm nào.</div>
+          <div style="font-size:0.78rem; color:#a89178; font-style:italic;">Chưa xin quẻ xăm nào. Hãy đến bàn xin quẻ cạnh Gác Chuông!</div>
         </div>
       </div>
 
-      <button class="btn-temple-gold" id="btn-share-from-journal" style="margin-top:14px;">Tạo Thiệp Bình An</button>
+      <button class="btn-temple-gold" id="btn-share-from-journal" style="margin-top:16px;">Tạo Thiệp Bình An</button>
     </div>
   </div>
 
   <!-- Modal 7: Chia Sẻ Thiệp Bình An -->
   <div class="modal-overlay" id="modal-share">
     <div class="modal-box">
+      <div class="modal-corner-accent corner-tl"></div>
+      <div class="modal-corner-accent corner-tr"></div>
+      <div class="modal-corner-accent corner-bl"></div>
+      <div class="modal-corner-accent corner-br"></div>
       <button class="btn-close-modal" data-close="modal-share">✕</button>
       <div class="modal-header-ornament">🌸</div>
       <h3 class="modal-title">Thiệp Cầu An</h3>
@@ -1307,9 +1616,9 @@
 
       <canvas id="share-canvas-preview" width="1080" height="1350"></canvas>
 
-      <div style="display:flex; gap:10px; width:100%; margin-top:8px;">
+      <div style="display:flex; gap:12px; width:100%; margin-top:10px;">
         <button class="btn-temple-gold" id="btn-native-share" style="flex:1;">Chia Sẻ Thiệp</button>
-        <button class="btn-temple-outline" id="btn-download-img" style="flex:1;">Tải Ảnh Về</button>
+        <button class="btn-temple-outline" id="btn-download-img" style="flex:1; margin-top:14px;">Tải Ảnh Về</button>
       </div>
     </div>
   </div>
@@ -1357,12 +1666,13 @@
       </div>
     </div>
 
-    <button class="btn-temple-gold" id="btn-close-tutorial" style="max-width:280px;">ĐÃ HIỂU & BẮT ĐẦU</button>
+    <button class="btn-temple-gold" id="btn-close-tutorial" style="max-width:300px;">ĐÃ HIỂU & BẮT ĐẦU</button>
   </div>
 
   <!-- ==========================================================================
        5. CHƯƠNG TRÌNH CHÍNH (JAVASCRIPT / THREE.JS)
-       ========================================================================== -->
+       ========================================================================== */
+  -->
   <script type="module">
     import * as THREE from 'three';
 
@@ -1386,7 +1696,6 @@
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         this.ctx = new AudioContext();
 
-        // Master Gain cho Ambient
         this.ambientGain = this.ctx.createGain();
         this.ambientGain.gain.setValueAtTime(0.28, this.ctx.currentTime);
         this.ambientGain.connect(this.ctx.destination);
@@ -1406,8 +1715,8 @@
       startAmbient() {
         if (!this.ctx || this.isMuted) return;
 
-        // 1. Tiếng Tụng Kinh Rì Rầm Xa Xa (Om Drone ấm áp hòa cùng không gian)
-        const droneFreqs = [65.4, 130.8, 196.0]; // C2, C3, G3
+        // 1. Tiếng Tụng Kinh Om Drone trầm ấm
+        const droneFreqs = [65.4, 130.8, 196.0];
         droneFreqs.forEach(freq => {
           const osc = this.ctx.createOscillator();
           const filter = this.ctx.createBiquadFilter();
@@ -1429,7 +1738,7 @@
           this.droneOscs.push(osc);
         });
 
-        // 2. Tiếng Gió Thoảng Xào Xạc (Filtered Pink/White Noise)
+        // 2. Tiếng Gió Thoảng Xào Xạc
         const bufferSize = this.ctx.sampleRate * 2;
         const noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
         const output = noiseBuffer.getChannelData(0);
@@ -1458,7 +1767,7 @@
         windGain.connect(this.ambientGain);
         whiteNoise.start();
 
-        // 3. Tiếng chim hót ngẫu nhiên xa xa (mỗi 12-25 giây)
+        // 3. Tiếng chim hót ngẫu nhiên xa xa
         const scheduleBird = () => {
           if (!this.isMuted) this.playBirdChirp();
           const nextTime = 12000 + Math.random() * 15000;
@@ -1467,7 +1776,6 @@
         this.birdTimer = setTimeout(scheduleBird, 8000);
       }
 
-      // Tiếng chim hót véo von
       playBirdChirp() {
         if (!this.ctx || this.isMuted) return;
         const now = this.ctx.currentTime;
@@ -1491,19 +1799,18 @@
         osc.stop(now + 0.4);
       }
 
-      // Tiếng Thỉnh Chuông Đại Hồng Chung (Ngân vang sâu lắng với nhiều âm bội)
       playBellSound() {
         if (!this.ctx || this.isMuted) return;
         const now = this.ctx.currentTime;
         
         const harmonics = [
-          { f: 110, gain: 0.5, decay: 7.0 },  // Âm trầm căn bản
-          { f: 220, gain: 0.35, decay: 5.5 }, // Quãng tám 1
-          { f: 332, gain: 0.25, decay: 4.5 }, // Quãng năm
+          { f: 110, gain: 0.5, decay: 7.0 },
+          { f: 220, gain: 0.35, decay: 5.5 },
+          { f: 332, gain: 0.25, decay: 4.5 },
           { f: 443, gain: 0.2, decay: 3.5 },
           { f: 558, gain: 0.15, decay: 2.8 },
           { f: 775, gain: 0.1, decay: 2.0 },
-          { f: 1120, gain: 0.08, decay: 1.5 } // Âm kim loại chạm ban đầu
+          { f: 1120, gain: 0.08, decay: 1.5 }
         ];
 
         harmonics.forEach(h => {
@@ -1525,7 +1832,6 @@
         });
       }
 
-      // Tiếng Gõ Mõ Tụng Kinh (Độ ấm gỗ, pitch rơi nhanh)
       playMokugyoSound() {
         if (!this.ctx || this.isMuted) return;
         const now = this.ctx.currentTime;
@@ -1554,7 +1860,6 @@
         osc.stop(now + 0.16);
       }
 
-      // Tiếng que xăm tre lách cách khi lắc ống xăm
       playBambooSticksSound() {
         if (!this.ctx || this.isMuted) return;
         const now = this.ctx.currentTime;
@@ -1575,7 +1880,6 @@
         osc.stop(now + 0.05);
       }
 
-      // Tiếng khánh nhỏ / dâng hương thanh tịnh
       playIncenseChime() {
         if (!this.ctx || this.isMuted) return;
         const now = this.ctx.currentTime;
@@ -1602,9 +1906,6 @@
 
     /* ==========================================================================
        B. HỆ THỐNG QUẢN LÝ NHIỀU TÀI KHOẢN PHẬT TỬ (LOCAL MULTI-PROFILE)
-       - Lưu trữ hoàn toàn tại thiết bị qua localStorage.
-       - Cho phép tạo nhiều hồ sơ (bố, mẹ, con, bạn bè...), chuyển đổi nhanh.
-       - Sao lưu (Export JSON) & Khôi phục (Import JSON).
        ========================================================================== */
     const STORAGE_KEY_V2 = 'len_chua_cau_an_profiles_v2';
     const OLD_STORAGE_KEY = 'len_chua_cau_an_save_v1';
@@ -1630,7 +1931,6 @@
         if (rawV2) {
           profilesDatabase = JSON.parse(rawV2);
         } else {
-          // Di chuyển dữ liệu cũ nếu có
           const rawV1 = localStorage.getItem(OLD_STORAGE_KEY);
           if (rawV1) {
             const old = JSON.parse(rawV1);
@@ -1661,7 +1961,6 @@
 
     loadDatabase();
 
-    // Lấy tài khoản đang kích hoạt
     function getCurrentProfile() {
       if (!profilesDatabase.profiles[profilesDatabase.activeId]) {
         const firstKey = Object.keys(profilesDatabase.profiles)[0] || 'profile_default';
@@ -1670,7 +1969,12 @@
       return profilesDatabase.profiles[profilesDatabase.activeId];
     }
 
-    // Render danh sách tài khoản trong Modal
+    function updateHudProfileName() {
+      const p = getCurrentProfile();
+      const el = document.getElementById('hud-profile-name');
+      if (el) el.innerText = p.playerName || 'Tâm An';
+    }
+
     function renderAccountsList() {
       const listEl = document.getElementById('accounts-list');
       listEl.innerHTML = '';
@@ -1687,10 +1991,10 @@
             <div class="name">
               <span>${isActive ? '🟢' : '⚪'}</span>
               <span>${escapeHtml(p.playerName)}</span>
-              ${isActive ? '<span style="font-size:0.7rem; color:#4ade80;">(Đang chơi)</span>' : ''}
+              ${isActive ? '<span style="font-size:0.72rem; color:#4ade80; font-weight:700;">(Đang chọn)</span>' : ''}
             </div>
             <div class="meta">
-              🪔 ${p.incenseCount} lần thắp hương • Tâm an: ${p.bestCalmScore || '--'} • 🎋 ${p.prayers.length} lời cầu • 🎍 ${p.fortunes.length} quẻ
+              🪔 ${p.incenseCount} dâng hương • Tâm an: ${p.bestCalmScore || '--'} • 🎋 ${p.prayers.length} lời cầu • 🎍 ${p.fortunes.length} quẻ
             </div>
           </div>
           <div class="account-actions">
@@ -1700,7 +2004,6 @@
           </div>
         `;
 
-        // Click vào thẻ để chuyển tài khoản
         card.querySelector('.account-info').addEventListener('click', () => {
           switchAccount(p.id);
         });
@@ -1708,7 +2011,6 @@
         listEl.appendChild(card);
       });
 
-      // Gắn sự kiện các nút
       listEl.querySelectorAll('.btn-switch-acc').forEach(btn => {
         btn.addEventListener('click', (e) => {
           e.stopPropagation();
@@ -1726,6 +2028,7 @@
             target.playerName = newName.trim().substring(0, 20);
             saveDatabase();
             renderAccountsList();
+            updateHudProfileName();
             showToast(`Đã đổi tên thành: ${target.playerName}`);
           }
         });
@@ -1736,14 +2039,15 @@
           e.stopPropagation();
           const target = profilesDatabase.profiles[btn.dataset.id];
           if (!target) return;
-          if (confirm(`Bạn có chắc muốn xóa tài khoản "${target.playerName}" không? Dữ liệu của tài khoản này sẽ bị xóa khỏi máy.`)) {
+          if (confirm(`Bạn có chắc muốn xóa hồ sơ "${target.playerName}" không?`)) {
             delete profilesDatabase.profiles[btn.dataset.id];
             if (profilesDatabase.activeId === btn.dataset.id) {
               profilesDatabase.activeId = Object.keys(profilesDatabase.profiles)[0];
             }
             saveDatabase();
             renderAccountsList();
-            showToast(`Đã xóa tài khoản.`);
+            updateHudProfileName();
+            showToast(`Đã xóa hồ sơ.`);
           }
         });
       });
@@ -1754,8 +2058,9 @@
         profilesDatabase.activeId = profileId;
         saveDatabase();
         renderAccountsList();
+        updateHudProfileName();
         const p = getCurrentProfile();
-        showToast(`Đã chuyển sang tài khoản Phật tử: ${p.playerName}`);
+        showToast(`Đã chuyển sang tài khoản: ${p.playerName}`);
       }
     }
 
@@ -1778,7 +2083,8 @@
       profilesDatabase.activeId = newId;
       saveDatabase();
       renderAccountsList();
-      showToast(`Tạo thành công tài khoản: ${cleanName}`);
+      updateHudProfileName();
+      showToast(`Tạo thành công hồ sơ: ${cleanName}`);
     }
 
     document.getElementById('btn-add-account').addEventListener('click', () => {
@@ -1792,7 +2098,6 @@
       openModal('modal-accounts');
     });
 
-    // Sao lưu dữ liệu ra file JSON
     document.getElementById('btn-export-backup').addEventListener('click', () => {
       const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(profilesDatabase, null, 2));
       const downloadAnchor = document.createElement('a');
@@ -1804,7 +2109,6 @@
       showToast('📥 Đã xuất file sao lưu dữ liệu các tài khoản!');
     });
 
-    // Khôi phục dữ liệu từ file JSON
     const backupFileInput = document.getElementById('backup-file-input');
     document.getElementById('btn-import-backup').addEventListener('click', () => {
       backupFileInput.click();
@@ -1821,6 +2125,7 @@
             profilesDatabase = parsed;
             saveDatabase();
             renderAccountsList();
+            updateHudProfileName();
             showToast('📤 Khôi phục dữ liệu tài khoản thành công!');
           } else {
             showToast('File không đúng định dạng sao lưu!');
@@ -1837,6 +2142,8 @@
         return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
       });
     }
+
+    updateHudProfileName();
 
     // 40 câu quẻ cát tường tích cực, thanh tịnh
     const FORTUNE_LIST = [
@@ -1897,13 +2204,11 @@
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     const scene = new THREE.Scene();
-
-    // Sương mù nhẹ tạo chiều sâu hoàng hôn
-    scene.fog = new THREE.FogExp2(0x2a162b, 0.016);
+    scene.fog = new THREE.FogExp2(0x2d1424, 0.015);
 
     const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 150);
 
-    // Bầu trời Hoàng Hôn chuyển đêm (Procedural Canvas Hemisphere)
+    // Bầu trời Hoàng Hôn chuyển đêm nghệ thuật
     function createTwilightSky() {
       const skyCanvas = document.createElement('canvas');
       skyCanvas.width = 512;
@@ -1911,24 +2216,34 @@
       const ctx = skyCanvas.getContext('2d');
 
       const grad = ctx.createLinearGradient(0, 0, 0, 512);
-      grad.addColorStop(0.0, '#100618'); // Đỉnh trời xanh tím đêm
-      grad.addColorStop(0.35, '#281132');
-      grad.addColorStop(0.65, '#5d2639'); // Đỏ tím hoàng hôn
-      grad.addColorStop(0.85, '#99442b'); // Cam đỏ rực
-      grad.addColorStop(1.0, '#d97d40'); // Chân trời cam vàng ấm
+      grad.addColorStop(0.0, '#0d0414');
+      grad.addColorStop(0.3, '#1f0d26');
+      grad.addColorStop(0.55, '#561e30');
+      grad.addColorStop(0.78, '#9c3f2b');
+      grad.addColorStop(1.0, '#e58242');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, 512, 512);
 
-      // Điểm xuyết các ngôi sao lấp lánh trên đỉnh trời
+      // Điểm xuyết các vì sao lấp lánh
       ctx.fillStyle = '#ffffff';
-      for (let i = 0; i < 90; i++) {
+      for (let i = 0; i < 110; i++) {
         const x = Math.random() * 512;
-        const y = Math.random() * 220;
-        const rad = Math.random() * 1.4;
+        const y = Math.random() * 240;
+        const rad = Math.random() * 1.5;
         ctx.beginPath();
         ctx.arc(x, y, rad, 0, Math.PI * 2);
         ctx.fill();
       }
+
+      // Mặt trăng lưỡi liềm vàng thanh tịnh
+      ctx.fillStyle = '#ffefa8';
+      ctx.beginPath();
+      ctx.arc(380, 110, 22, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#180a20';
+      ctx.beginPath();
+      ctx.arc(372, 105, 20, 0, Math.PI * 2);
+      ctx.fill();
 
       const skyTex = new THREE.CanvasTexture(skyCanvas);
       const skyGeo = new THREE.SphereGeometry(90, 24, 16);
@@ -1943,10 +2258,10 @@
     createTwilightSky();
 
     // Hệ thống Chiếu Sáng
-    const ambientLight = new THREE.AmbientLight(0x765478, 1.2);
+    const ambientLight = new THREE.AmbientLight(0x765478, 1.25);
     scene.add(ambientLight);
 
-    const sunLight = new THREE.DirectionalLight(0xff9a52, 2.2);
+    const sunLight = new THREE.DirectionalLight(0xff9f5a, 2.3);
     sunLight.position.set(25, 30, -35);
     sunLight.castShadow = true;
     sunLight.shadow.mapSize.width = 1024;
@@ -1960,28 +2275,27 @@
     sunLight.shadow.camera.bottom = -shadowD;
     scene.add(sunLight);
 
-    // Mảng lưu trữ các đèn lồng chớp tắt nhẹ (flicker)
     const lanternLights = [];
 
-    // Vật liệu dùng chung (Tối ưu draw calls & memory)
+    // Vật liệu dùng chung
     const materials = {
-      brick: new THREE.MeshStandardMaterial({ color: 0x9c422b, roughness: 0.85 }), // Gạch Bát Tràng
-      stone: new THREE.MeshStandardMaterial({ color: 0x6e6862, roughness: 0.9 }),
-      woodDark: new THREE.MeshStandardMaterial({ color: 0x3d2314, roughness: 0.75 }),
+      brick: new THREE.MeshStandardMaterial({ color: 0x9c422b, roughness: 0.82 }),
+      stone: new THREE.MeshStandardMaterial({ color: 0x6e6862, roughness: 0.88 }),
+      woodDark: new THREE.MeshStandardMaterial({ color: 0x3d2314, roughness: 0.7 }),
       woodRed: new THREE.MeshStandardMaterial({ color: 0x82241b, roughness: 0.65 }),
       goldBronze: new THREE.MeshStandardMaterial({ color: 0xc49033, metalness: 0.75, roughness: 0.35 }),
-      roofTile: new THREE.MeshStandardMaterial({ color: 0xa8321e, roughness: 0.6 }),
+      roofTile: new THREE.MeshStandardMaterial({ color: 0xa8321e, roughness: 0.55 }),
       wallYellow: new THREE.MeshStandardMaterial({ color: 0xd8b273, roughness: 0.85 }),
       lanternRed: new THREE.MeshStandardMaterial({ color: 0xe02828, emissive: 0xa01818, roughness: 0.4 }),
-      water: new THREE.MeshStandardMaterial({ color: 0x1b4d3e, roughness: 0.15, metalness: 0.2 }),
-      lotusLeaf: new THREE.MeshStandardMaterial({ color: 0x2e6f40, roughness: 0.8 }),
+      water: new THREE.MeshStandardMaterial({ color: 0x1b4d3e, roughness: 0.15, metalness: 0.25 }),
+      lotusLeaf: new THREE.MeshStandardMaterial({ color: 0x2e6f40, roughness: 0.75 }),
       lotusPink: new THREE.MeshStandardMaterial({ color: 0xf57fa0, roughness: 0.5, emissive: 0x38101a }),
-      robeBlue: new THREE.MeshStandardMaterial({ color: 0x5a7995, roughness: 0.8 }),
+      robeBlue: new THREE.MeshStandardMaterial({ color: 0x5a7995, roughness: 0.75 }),
       robeBrown: new THREE.MeshStandardMaterial({ color: 0x6e462d, roughness: 0.85 }),
       skin: new THREE.MeshStandardMaterial({ color: 0xf2c8a2, roughness: 0.6 })
     };
 
-    // Sân Chùa (Nền gạch đỏ & thảm cỏ xanh xung quanh)
+    // Sân Chùa
     function buildCourtyard() {
       const courtGeo = new THREE.PlaneGeometry(48, 54);
       const courtMesh = new THREE.Mesh(courtGeo, materials.brick);
@@ -1991,7 +2305,7 @@
       scene.add(courtMesh);
 
       const grassGeo = new THREE.PlaneGeometry(120, 120);
-      const grassMat = new THREE.MeshStandardMaterial({ color: 0x22351c, roughness: 0.95 });
+      const grassMat = new THREE.MeshStandardMaterial({ color: 0x20321a, roughness: 0.95 });
       const grassMesh = new THREE.Mesh(grassGeo, grassMat);
       grassMesh.rotation.x = -Math.PI / 2;
       grassMesh.position.y = -0.05;
@@ -2021,7 +2335,7 @@
     }
     buildCourtyard();
 
-    // Mái ngói cong truyền thống Việt Nam
+    // Mái ngói cong truyền thống
     function createCurvedRoof(width, depth, height, baseColor) {
       const roofGroup = new THREE.Group();
       const halfW = width / 2;
@@ -2053,7 +2367,7 @@
       return roofGroup;
     }
 
-    // 1. CỔNG TAM QUAN (Biển tên "Chùa An Lạc" chữ Quốc Ngữ)
+    // 1. CỔNG TAM QUAN
     function buildTamQuanGate() {
       const gateGroup = new THREE.Group();
       gateGroup.position.set(0, 0, 31);
@@ -2081,12 +2395,12 @@
       rightRoof.position.set(3.2, 4.2, 0);
       gateGroup.add(rightRoof);
 
-      // Biển tên chùa chữ Quốc Ngữ: "CHÙA AN LẠC"
+      // Biển tên chùa chữ Quốc Ngữ
       const signCanvas = document.createElement('canvas');
       signCanvas.width = 512;
       signCanvas.height = 128;
       const sCtx = signCanvas.getContext('2d');
-      sCtx.fillStyle = '#681710';
+      sCtx.fillStyle = '#5c1410';
       sCtx.fillRect(0, 0, 512, 128);
       sCtx.lineWidth = 10;
       sCtx.strokeStyle = '#e5a93c';
@@ -2104,7 +2418,6 @@
       signMesh.position.set(0, 4.2, 0.5);
       gateGroup.add(signMesh);
 
-      // Đèn lồng treo cổng
       [-1.8, 1.8].forEach(lx => {
         addLantern(gateGroup, lx, 3.8, 0.4);
       });
@@ -2113,7 +2426,6 @@
     }
     buildTamQuanGate();
 
-    // Hàm tạo Đèn Lồng Đỏ lung linh
     function addLantern(parent, x, y, z) {
       const lanternGroup = new THREE.Group();
       lanternGroup.position.set(x, y, z);
@@ -2137,7 +2449,7 @@
       tasselMesh.position.y = -0.6;
       lanternGroup.add(tasselMesh);
 
-      const pLight = new THREE.PointLight(0xff6e30, 0.8, 4.5);
+      const pLight = new THREE.PointLight(0xff6e30, 0.85, 4.5);
       pLight.position.set(0, 0, 0);
       lanternGroup.add(pLight);
       lanternLights.push(pLight);
@@ -2191,7 +2503,7 @@
         addLantern(hallGroup, lx, 4.6, 5.7);
       });
 
-      // TƯỢNG PHẬT THÍCH CA MÂU NI NGỒI KIẾT GIÀ (Trang nghiêm)
+      // TƯỢNG PHẬT THÍCH CA MÂU NI NGỒI KIẾT GIÀ
       const buddhaGroup = new THREE.Group();
       buddhaGroup.position.set(0, 1.8, 3.0);
 
@@ -2232,7 +2544,7 @@
       haloMesh.position.set(0, 1.9, -0.4);
       buddhaGroup.add(haloMesh);
 
-      const buddhaLight = new THREE.PointLight(0xffdf78, 1.2, 6);
+      const buddhaLight = new THREE.PointLight(0xffdf78, 1.3, 6.5);
       buddhaLight.position.set(0, 2.0, 0.5);
       buddhaGroup.add(buddhaLight);
 
@@ -2241,7 +2553,7 @@
     }
     buildMainHallAndBuddha();
 
-    // 3. LƯ HƯƠNG ĐỒNG LỚN GIỮA SÂN (Hoạt động 1: Thắp Hương)
+    // 3. LƯ HƯƠNG ĐỒNG LỚN GIỮA SÂN
     let incenseSticksGroup;
     function buildIncenseBurner() {
       const burnerGroup = new THREE.Group();
@@ -2303,7 +2615,7 @@
     }
     buildIncenseBurner();
 
-    // 4. GÁC CHUÔNG & ĐẠI HỒNG CHUNG (Hoạt động 2: Thỉnh Chuông)
+    // 4. GÁC CHUÔNG & ĐẠI HỒNG CHUNG
     let bellMesh;
     function buildBellTower() {
       const towerGroup = new THREE.Group();
@@ -2354,7 +2666,7 @@
     }
     buildBellTower();
 
-    // 5. CÂY BỒ ĐỀ CỔ THỤ LỚN (Treo dải lụa đỏ cầu an)
+    // 5. CÂY BỒ ĐỀ CỔ THỤ LỚN
     let bodhiRibbonsGroup;
     function buildBodhiTree() {
       const treeGroup = new THREE.Group();
@@ -2427,7 +2739,7 @@
     }
     buildBodhiTree();
 
-    // 6. HỒ SEN NHỎ & ĐÈN HOA ĐĂNG (Hoạt động 4: Thả Hoa Đăng)
+    // 6. HỒ SEN NHỎ & ĐÈN HOA ĐĂNG
     let lotusFloatingGroup;
     function buildLotusLake() {
       const lakeGroup = new THREE.Group();
@@ -2506,7 +2818,7 @@
     }
     buildLotusLake();
 
-    // 7. BÀN XIN QUẺ XĂM & ĐỆM NGỒI TỤNG KINH (Hoạt động 3 & 5)
+    // 7. BÀN XIN QUẺ XĂM & ĐỆM NGỒI TỤNG KINH
     function buildRitualStations() {
       const tableGroup = new THREE.Group();
       tableGroup.position.set(13, 0, -4);
@@ -2544,7 +2856,7 @@
     }
     buildRitualStations();
 
-    // 8. HỆ THỐNG HẠT HIỆU ỨNG (KHÓI HƯƠNG, ĐOM ĐÓM, CÁNH HOA BỒ ĐỀ)
+    // 8. HẠT HIỆU ỨNG (KHÓI HƯƠNG, ĐOM ĐÓM, CÁNH HOA BỒ ĐỀ)
     let incenseParticles, fireflyParticles, petalParticles;
 
     function buildParticleSystems() {
@@ -2566,7 +2878,7 @@
       incenseParticles = new THREE.Points(smokeGeo, smokeMat);
       scene.add(incenseParticles);
 
-      const flyCount = 60;
+      const flyCount = 65;
       const flyGeo = new THREE.BufferGeometry();
       const flyPos = new Float32Array(flyCount * 3);
       for (let i = 0; i < flyCount; i++) {
@@ -2584,7 +2896,7 @@
       fireflyParticles = new THREE.Points(flyGeo, flyMat);
       scene.add(fireflyParticles);
 
-      const petalCount = 75;
+      const petalCount = 80;
       const petalGeo = new THREE.BufferGeometry();
       const petalPos = new Float32Array(petalCount * 3);
       for (let i = 0; i < petalCount; i++) {
@@ -2747,7 +3059,7 @@
     }
 
     /* ==========================================================================
-       E. KHÁCH HÀNH HƯƠNG AI (30-50 NGƯỜI ĐÔNG VUI, ẤM ÁP)
+       E. KHÁCH HÀNH HƯƠNG AI
        ========================================================================== */
     const AI_SPEECHES = [
       "Cầu cho mẹ mau khỏe...",
@@ -2924,7 +3236,7 @@
             const idx = this.activeBubbles.indexOf(bubbleObj);
             if (idx > -1) this.activeBubbles.splice(idx, 1);
             bubble.remove();
-          }, 500);
+          }, 450);
         }, 3600);
       }
 
@@ -2951,7 +3263,7 @@
     const pilgrimMgr = new AIPilgrimManager();
 
     /* ==========================================================================
-       F. VÙNG HOẠT ĐỘNG & GIAO DIỆN NÚT HÀNH ĐỘNG (INTERACTION TRIGGER)
+       F. VÙNG HOẠT ĐỘNG & GIAO DIỆN NÚT HÀNH ĐỘNG
        ========================================================================== */
     const ZONES = [
       {
@@ -3073,7 +3385,7 @@
       showToast(`🕯️ Bạn đã dâng ${selectedIncenseSticks} nén hương thành kính. Nguyện cầu gia đạo bình an!`);
     });
 
-    // 2. Minigame: Thỉnh Chuông (Rhythm / Timing QTE)
+    // 2. Minigame: Thỉnh Chuông
     let bellPulseAnim = null;
     let bellPulseScale = 1.6;
     let bellStrikeReady = true;
@@ -3092,7 +3404,7 @@
 
         if (pulseRing) {
           pulseRing.style.transform = `scale(${bellPulseScale})`;
-          pulseRing.style.borderColor = bellPulseScale <= 1.15 && bellPulseScale >= 0.95 ? '#4ade80' : '#ff6e40';
+          pulseRing.style.borderColor = bellPulseScale <= 1.15 && bellPulseScale >= 0.95 ? '#4ade80' : '#ff7b42';
         }
         bellPulseAnim = requestAnimationFrame(loopPulse);
       }
@@ -3133,7 +3445,7 @@
     document.getElementById('bell-strike-btn').addEventListener('click', doStrikeBell);
     document.getElementById('btn-strike-bell-action').addEventListener('click', doStrikeBell);
 
-    // 3. Minigame: Gõ Mõ Tụng Kinh (Nhịp điệu 25 giây)
+    // 3. Minigame: Gõ Mõ Tụng Kinh
     let mokugyoActive = false;
     let mokugyoScore = 0;
     let mokugyoHits = 0;
@@ -3149,7 +3461,7 @@
     mokugyoTapBtn.addEventListener('click', () => {
       audioMgr.playMokugyoSound();
       mokugyoTapBtn.classList.add('struck');
-      setTimeout(() => mokugyoTapBtn.classList.remove('struck'), 100);
+      setTimeout(() => mokugyoTapBtn.classList.remove('struck'), 90);
 
       if (!mokugyoActive) {
         mokugyoActive = true;
@@ -3209,7 +3521,7 @@
       showToast(`🪘 Thời tụng kinh viên mãn! Điểm Tâm An: ${current.bestCalmScore}/100`);
     });
 
-    // 4. Minigame: Viết Lời Cầu An (Treo lụa Bồ Đề hoặc thả Hoa Đăng Hồ Sen)
+    // 4. Minigame: Viết Lời Cầu An
     const prayerInput = document.getElementById('prayer-text');
     const prayerCharCount = document.getElementById('prayer-char-count');
     let prayerDestination = 'tree';
@@ -3335,7 +3647,7 @@
 
       const prayersContainer = document.getElementById('journal-prayers-list');
       if (current.prayers.length === 0) {
-        prayersContainer.innerHTML = '<div style="font-size:0.75rem; color:#a89178; font-style:italic;">Chưa có lời cầu nguyện nào. Hãy đến Cây Bồ Đề hoặc Hồ Sen để gửi lời nguyện!</div>';
+        prayersContainer.innerHTML = '<div style="font-size:0.78rem; color:#a89178; font-style:italic;">Chưa có lời cầu nguyện nào. Hãy đến Cây Bồ Đề hoặc Hồ Sen để gửi lời nguyện!</div>';
       } else {
         prayersContainer.innerHTML = current.prayers.slice(0, 10).map(p => `
           <div class="journal-item">
@@ -3347,7 +3659,7 @@
 
       const fortunesContainer = document.getElementById('journal-fortunes-list');
       if (current.fortunes.length === 0) {
-        fortunesContainer.innerHTML = '<div style="font-size:0.75rem; color:#a89178; font-style:italic;">Chưa xin quẻ xăm nào. Hãy đến bàn xin quẻ cạnh Gác Chuông!</div>';
+        fortunesContainer.innerHTML = '<div style="font-size:0.78rem; color:#a89178; font-style:italic;">Chưa xin quẻ xăm nào. Hãy đến bàn xin quẻ cạnh Gác Chuông!</div>';
       } else {
         fortunesContainer.innerHTML = current.fortunes.slice(0, 10).map(f => `
           <div class="journal-item">
@@ -3383,75 +3695,91 @@
       const H = 1350;
 
       const bgGrad = ctx.createLinearGradient(0, 0, 0, H);
-      bgGrad.addColorStop(0.0, '#1a0b1f');
-      bgGrad.addColorStop(0.35, '#3b1828');
-      bgGrad.addColorStop(0.65, '#6e2b26');
-      bgGrad.addColorStop(0.85, '#a44c2a');
-      bgGrad.addColorStop(1.0, '#e58e46');
+      bgGrad.addColorStop(0.0, '#130616');
+      bgGrad.addColorStop(0.35, '#351224');
+      bgGrad.addColorStop(0.65, '#682425');
+      bgGrad.addColorStop(0.85, '#9f4627');
+      bgGrad.addColorStop(1.0, '#e58742');
       ctx.fillStyle = bgGrad;
       ctx.fillRect(0, 0, W, H);
 
-      ctx.strokeStyle = '#f2c054';
-      ctx.lineWidth = 8;
+      // Khung viền thếp vàng kép
+      ctx.strokeStyle = '#e6b758';
+      ctx.lineWidth = 10;
       ctx.strokeRect(36, 36, W - 72, H - 72);
 
-      ctx.lineWidth = 2;
-      ctx.strokeRect(50, 50, W - 100, H - 100);
+      ctx.lineWidth = 2.5;
+      ctx.strokeRect(52, 52, W - 104, H - 104);
 
+      // 4 góc hoa văn
+      const cornerSize = 40;
+      ctx.fillStyle = '#e6b758';
+      [[60, 60], [W - 60 - cornerSize, 60], [60, H - 60 - cornerSize], [W - 60 - cornerSize, H - 60 - cornerSize]].forEach(([cx, cy]) => {
+        ctx.fillRect(cx, cy, cornerSize, 4);
+        ctx.fillRect(cx, cy, 4, cornerSize);
+      });
+
+      // Vầng hào quang sen vàng
       ctx.beginPath();
-      ctx.arc(W / 2, 340, 130, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(242, 192, 84, 0.25)';
+      ctx.arc(W / 2, 330, 140, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(230, 183, 88, 0.22)';
       ctx.fill();
 
-      ctx.font = '84px serif';
+      ctx.font = '96px serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText('🪷', W / 2, 335);
+      ctx.fillText('🪷', W / 2, 325);
 
+      // Tiêu đề Đại tự Thư Pháp
       ctx.fillStyle = '#fce29a';
-      ctx.font = 'bold 64px Playfair Display, serif';
-      ctx.fillText('LÊN CHÙA CẦU AN', W / 2, 510);
+      ctx.font = 'bold 68px Playfair Display, serif';
+      ctx.fillText('LÊN CHÙA CẦU AN', W / 2, 505);
 
       ctx.fillStyle = '#edd2a6';
-      ctx.font = 'italic 34px Playfair Display, serif';
+      ctx.font = 'italic 36px Playfair Display, serif';
       ctx.fillText('Chùa An Lạc • Bốn Mùa An Nhiên', W / 2, 575);
 
-      ctx.strokeStyle = 'rgba(242, 192, 84, 0.6)';
+      ctx.strokeStyle = 'rgba(230, 183, 88, 0.7)';
       ctx.lineWidth = 3;
       ctx.beginPath();
-      ctx.moveTo(240, 620);
-      ctx.lineTo(840, 620);
+      ctx.moveTo(220, 625);
+      ctx.lineTo(860, 625);
       ctx.stroke();
 
+      // Thông tin Phật tử & Lời nguyện
       ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold 38px Nunito, sans-serif';
-      ctx.fillText(`Phật tử: ${current.playerName || 'Tâm An'}`, W / 2, 690);
+      ctx.font = 'bold 40px Plus Jakarta Sans, sans-serif';
+      ctx.fillText(`Phật tử: ${current.playerName || 'Tâm An'}`, W / 2, 695);
 
       const latestPrayer = current.prayers[0] ? `"${current.prayers[0].text}"` : '"Nguyện cầu thân tâm thường an lạc, gia đạo bình an."';
       ctx.fillStyle = '#fff4db';
       ctx.font = 'italic 34px Playfair Display, serif';
-      wrapText(ctx, latestPrayer, W / 2, 770, 780, 48);
+      wrapText(ctx, latestPrayer, W / 2, 780, 800, 50);
 
       const calmText = current.bestCalmScore ? `Chỉ số Tâm An: ${current.bestCalmScore}/100` : 'Tâm An Lạc • Phúc Đức Tràn Đầy';
       ctx.fillStyle = '#ffd66b';
-      ctx.font = 'bold 36px Nunito, sans-serif';
-      ctx.fillText(`🌸 ${calmText}`, W / 2, 940);
+      ctx.font = 'bold 36px Plus Jakarta Sans, sans-serif';
+      ctx.fillText(`🌸 ${calmText}`, W / 2, 950);
 
       if (current.fortunes[0]) {
         ctx.fillStyle = '#eed6b5';
-        ctx.font = '30px Nunito, sans-serif';
-        ctx.fillText(`🎍 ${current.fortunes[0].verse}`, W / 2, 1000);
+        ctx.font = '32px Plus Jakarta Sans, sans-serif';
+        ctx.fillText(`🎍 ${current.fortunes[0].verse}`, W / 2, 1015);
       }
 
       ctx.fillStyle = '#faecd3';
-      ctx.font = '26px Nunito, sans-serif';
-      ctx.fillText('Nguyện mười phương chư Phật gia hộ vạn sự hanh thông, cát tường như ý.', W / 2, 1140);
+      ctx.font = '26px Plus Jakarta Sans, sans-serif';
+      ctx.fillText('Nguyện mười phương chư Phật gia hộ vạn sự hanh thông, cát tường như ý.', W / 2, 1145);
 
+      // Con dấu son đỏ "Bình An"
       ctx.fillStyle = '#b82626';
-      ctx.fillRect(W / 2 - 60, 1190, 120, 60);
+      ctx.fillRect(W / 2 - 65, 1195, 130, 62);
+      ctx.strokeStyle = '#fce29a';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(W / 2 - 61, 1199, 122, 54);
       ctx.fillStyle = '#fff';
       ctx.font = 'bold 26px Playfair Display, serif';
-      ctx.fillText('BÌNH AN', W / 2, 1225);
+      ctx.fillText('BÌNH AN', W / 2, 1230);
     }
 
     function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
@@ -3507,7 +3835,7 @@
     }
 
     /* ==========================================================================
-       I. BỘ ĐIỀU KHIỂN ĐIỆN THOẠI (JOYSTICK CẢM ỨNG) & MÁY TÍNH (WASD / PHÍM)
+       I. BỘ ĐIỀU KHIỂN ĐIỆN THOẠI & MÁY TÍNH
        ========================================================================== */
     const inputDirection = new THREE.Vector2(0, 0);
 
@@ -3714,6 +4042,7 @@
       const cur = getCurrentProfile();
       cur.playerName = enteredName;
       saveDatabase();
+      updateHudProfileName();
 
       audioMgr.init();
       audioMgr.playBellSound();
